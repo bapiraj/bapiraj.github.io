@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Article - Keep Calm and Code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Full-width header with reduced height in dark blue */
+        header {
+            background-color: #1a3b5d; /* Dark Blue */
+            color: white;
+            text-align: center;
+            padding: 20px 0; /* Reduced height */
+            width: 100%; /* Full width */
+            box-sizing: border-box;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        /* Article container with space on both sides */
+        article {
+            width: 70%; /* Set width to 70% to leave space on both sides */
+            margin: 40px auto; /* Auto margins to center the content */
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        article h2, article h3 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        article p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #1a3b5d; /* Dark Blue */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Media queries for responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 0; /* Reduce header padding for tablets */
+            }
+
+            header h1 {
+                font-size: 1.8rem; /* Adjust font size for tablets */
+            }
+
+            article {
+                width: 85%; /* Increase width for tablets */
+                padding: 15px; /* Adjust padding for smaller screens */
+            }
+
+            article h2, article h3 {
+                font-size: 1.5rem; /* Adjust heading size */
+            }
+
+            article p {
+                font-size: 1rem; /* Adjust paragraph size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 10px 0; /* Reduce header padding for mobile */
+            }
+
+            header h1 {
+                font-size: 1.5rem; /* Smaller font size for mobile */
+            }
+
+            article {
+                width: 95%; /* Maximize width on mobile */
+                padding: 10px;
+            }
+
+            article h2, article h3 {
+                font-size: 1.3rem; /* Smaller headings for mobile */
+            }
+
+            article p {
+                font-size: 0.9rem; /* Smaller paragraph size for mobile */
+            }
+
+            footer {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Keep Calm and Code</h1>
+</header>
+
+<article>
+    <h2>Understanding Asynchronous Programming in JavaScript</h2>
+    <p>Asynchronous programming in JavaScript allows code execution without blocking the main thread, which is essential for tasks like API calls, file reading, and database queries. In this article, we'll dive deep into understanding how asynchronous JavaScript works using callbacks, promises, and async/await.</p>
+
+    <h3>Callbacks</h3>
+    <p>Callbacks are functions passed as arguments to other functions to be executed later. Although useful, they can lead to “callback hell” when used excessively.</p>
+
+    <h3>Promises</h3>
+    <p>Promises solve the problem of callback hell by providing a cleaner way to handle asynchronous operations. They represent an operation that will complete in the future, with success or failure.</p>
+
+    <h3>Async/Await</h3>
+    <p>Async/Await is syntactic sugar built on top of promises, making the code look synchronous while handling asynchronous tasks. It allows for more readable and maintainable code.</p>
+</article>
+
+<footer>
+    <p><a href="../index.html">Back to Home</a></p>
+</footer>
+
+</body>
+</html>
