@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Simple Neural Network using PyTorch - Keep Calm and Code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Full-width header with reduced height in dark blue */
+        header {
+            background-color: #1a3b5d; /* Dark Blue */
+            color: white;
+            text-align: center;
+            padding: 20px 0; /* Reduced height */
+            width: 100%; /* Full width */
+            box-sizing: border-box;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        /* Article container with space on both sides */
+        article {
+            width: 70%; /* Set width to 70% to leave space on both sides */
+            margin: 40px auto; /* Auto margins to center the content */
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        article h2, article h3 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        article p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        code {
+            display: block;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-left: 3px solid #1a3b5d;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #1a3b5d; /* Dark Blue */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Media queries for responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 0; /* Reduce header padding for tablets */
+            }
+
+            header h1 {
+                font-size: 1.8rem; /* Adjust font size for tablets */
+            }
+
+            article {
+                width: 85%; /* Increase width for tablets */
+                padding: 15px; /* Adjust padding for smaller screens */
+            }
+
+            article h2, article h3 {
+                font-size: 1.5rem; /* Adjust heading size */
+            }
+
+            article p {
+                font-size: 1rem; /* Adjust paragraph size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 10px 0; /* Reduce header padding for mobile */
+            }
+
+            header h1 {
+                font-size: 1.5rem; /* Smaller font size for mobile */
+            }
+
+            article {
+                width: 95%; /* Maximize width on mobile */
+                padding: 10px;
+            }
+
+            article h2, article h3 {
+                font-size: 1.3rem; /* Smaller headings for mobile */
+            }
+
+            article p {
+                font-size: 0.9rem; /* Smaller paragraph size for mobile */
+            }
+
+            footer {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Keep Calm and Code</h1>
+</header>
+
+<article>
+    <h2>Building a Simple Neural Network using PyTorch</h2>
+    <p>In this article, we will walk through how to build a simple neural network using PyTorch. PyTorch is a popular deep learning framework due to its ease of use and flexibility. Below are the steps and code snippets to create, train, and evaluate a neural network using PyTorch.</p>
+
+    <h3>Step 1: Installing PyTorch</h3>
+    <p>To begin, you need to install PyTorch. You can do this by running the following command:</p>
+    <code>
+        !pip install torch torchvision
+    </code>
+
+    <h3>Step 2: Importing Libraries</h3>
+    <p>Next, import the required libraries for creating the neural network:</p>
+    <code>
+        import torch<br>
+        import torch.nn as nn<br>
+        import torch.optim as optim<br>
+        import torch.nn.functional as F<br>
+        from torchvision import datasets, transforms
+    </code>
+
+    <h3>Step 3: Defining the Neural Network</h3>
+    <p>Now, define a simple neural network. In this case, we will build a feedforward neural network with one hidden layer.</p>
+    <code>
+        class SimpleNN(nn.Module):<br>
+        def __init__(self):<br>
+        super(SimpleNN, self).__init__()<br>
+        self.fc1 = nn.Linear(784, 128)<br>
+        self.fc2 = nn.Linear(128, 10)<br>
+        <br>
+        def forward(self, x):<br>
+        x = x.view(-1, 784)  # Flatten the input<br>
+        x = F.relu(self.fc1(x))<br>
+        x = self.fc2(x)<br>
+        return F.log_softmax(x, dim=1)
+    </code>
+
+    <h3>Step 4: Setting Up Training and Testing Data</h3>
+    <p>Next, load the training and testing datasets using torchvision. For this example, we will use the popular MNIST dataset of handwritten digits.</p>
+    <code>
+        transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])<br>
+        trainset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)<br>
+        testset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)<br>
+        trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)<br>
+        testloader = torch.utils.data.DataLoader(testset, batch_size=32, shuffle=False)
+    </code>
+
+    <h3>Step 5: Training the Model</h3>
+    <p>After defining the model and loading the data, the next step is to train the neural network:</p>
+    <code>
+        model = SimpleNN()<br>
+        optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)<br>
+        criterion = nn.CrossEntropyLoss()<br>
+        <br>
+        # Training loop<br>
+        for epoch in range(10):<br>
+        for data, target in trainloader:<br>
+        optimizer.zero_grad()<br>
+        output = model(data)<br>
+        loss = criterion(output, target)<br>
+        loss.backward()<br>
+        optimizer.step()<br>
+        print(f'Epoch {epoch + 1}: Loss = {loss.item()}')
+    </code>
+
+    <h3>Step 6: Evaluating the Model</h3>
+    <p>Once the model is trained, you can evaluate its performance on the test set:</p>
+    <code><!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Building a Simple Neural Network using PyTorch - Keep Calm and Code</title>
+            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+            <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Full-width header with reduced height in dark blue */
+        header {
+            background-color: #1a3b5d; /* Dark Blue */
+            color: white;
+            text-align: center;
+            padding: 20px 0; /* Reduced height */
+            width: 100%; /* Full width */
+            box-sizing: border-box;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        /* Article container with space on both sides */
+        article {
+            width: 70%; /* Set width to 70% to leave space on both sides */
+            margin: 40px auto; /* Auto margins to center the content */
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        article h2, article h3 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        article p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        code {
+            display: block;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-left: 3px solid #1a3b5d;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #1a3b5d; /* Dark Blue */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Media queries for responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 0; /* Reduce header padding for tablets */
+            }
+
+            header h1 {
+                font-size: 1.8rem; /* Adjust font size for tablets */
+            }
+
+            article {
+                width: 85%; /* Increase width for tablets */
+                padding: 15px; /* Adjust padding for smaller screens */
+            }
+
+            article h2, article h3 {
+                font-size: 1.5rem; /* Adjust heading size */
+            }
+
+            article p {
+                font-size: 1rem; /* Adjust paragraph size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 10px 0; /* Reduce header padding for mobile */
+            }
+
+            header h1 {
+                font-size: 1.5rem; /* Smaller font size for mobile */
+            }
+
+            article {
+                width: 95%; /* Maximize width on mobile */
+                padding: 10px;
+            }
+
+            article h2, article h3 {
+                font-size: 1.3rem; /* Smaller headings for mobile */
+            }
+
+            article p {
+                font-size: 0.9rem; /* Smaller paragraph size for mobile */
+            }
+
+            footer {
+                padding: 15px;
+            }
+        }
+    </style>
+        </head>
+        <body>
+
+        <header>
+            <h1>Keep Calm and Code</h1>
+        </header>
+
+        <article>
+            <h2>Building a Simple Neural Network using PyTorch</h2>
+            <p>In this article, we will walk through how to build a simple neural network using PyTorch. PyTorch is a popular deep learning framework due to its ease of use and flexibility. Below are the steps and code snippets to create, train, and evaluate a neural network using PyTorch.</p>
+
+            <h3>Step 1: Installing PyTorch</h3>
+            <p>To begin, you need to install PyTorch. You can do this by running the following command:</p>
+            <code>
+                !pip install torch torchvision
+            </code>
+
+            <h3>Step 2: Importing Libraries</h3>
+            <p>Next, import the required libraries for creating the neural network:</p>
+            <code>
+                import torch<br>
+                import torch.nn as nn<br>
+                import torch.optim as optim<br>
+                import torch.nn.functional as F<br>
+                from torchvision import datasets, transforms
+            </code>
+
+            <h3>Step 3: Defining the Neural Network</h3>
+            <p>Now, define a simple neural network. In this case, we will build a feedforward neural network with one hidden layer.</p>
+            <code>
+                class SimpleNN(nn.Module):<br>
+                def __init__(self):<br>
+                super(SimpleNN, self).__init__()<br>
+                self.fc1 = nn.Linear(784, 128)<br>
+                self.fc2 = nn.Linear(128, 10)<br>
+                <br>
+                def forward(self, x):<br>
+                x = x.view(-1, 784)  # Flatten the input<br>
+                x = F.relu(self.fc1(x))<br>
+                x = self.fc2(x)<br>
+                return F.log_softmax(x, dim=1)
+            </code>
+
+            <h3>Step 4: Setting Up Training and Testing Data</h3>
+            <p>Next, load the training and testing datasets using torchvision. For this example, we will use the popular MNIST dataset of handwritten digits.</p>
+            <code>
+                transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])<br>
+                trainset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)<br>
+                testset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)<br>
+                trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)<br>
+                testloader = torch.utils.data.DataLoader(testset, batch_size=32, shuffle=False)
+            </code>
+
+            <h3>Step 5: Training the Model</h3>
+            <p>After defining the model and loading the data, the next step is to train the neural network:</p>
+            <code>
+                model = SimpleNN()<br>
+                optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)<br>
+                criterion = nn.CrossEntropyLoss()<br>
+                <br>
+                # Training loop<br>
+                for epoch in range(10):<br>
+                for data, target in trainloader:<br>
+                optimizer.zero_grad()<br>
+                output = model(data)<br>
+                loss = criterion(output, target)<br>
+                loss.backward()<br>
+                optimizer.step()<br>
+                print(f'Epoch {epoch + 1}: Loss = {loss.item()}')
+            </code>
+
+            <h3>Step 6: Evaluating the Model</h3>
+            <p>Once the model is trained, you can evaluate its performance on the test set:</p>
+            <code>
+                correct = 0<br>
+                total = 0<br>
+                with torch.no_grad():<br>
+                for data, target in testloader:<br>
+                output = model(data)<br>
+                _, predicted = torch.max(output.data, 1)<br>
+                total += target.size(0)<br>
+                correct += (predicted == target).sum().item()<br>
+                print(f'Accuracy: {100 * correct / total}%')
+            </code>
+
+            <h3>Conclusion</h3>
+            <p>In this tutorial, we walked through the basic steps of building a neural network using PyTorch. This simple network can be extended with more layers and advanced features to create more complex models. Experiment with different architectures and datasets to improve performance!</p>
+        </article>
+
+        <footer>
+            <p><a href="../index.html">Back to Home</a></p>
+        </footer>
+
+        </body>
+        </html>
+
+        correct = 0<br>
+        total = 0<br>
+        with torch.no_grad():<br>
+        for data, target in testloader:<br>
+        output = model(data)<br>
+        _, predicted = torch.max(output.data, 1)<br>
+        total += target.size(0)<br>
+        correct += (predicted == target).sum().item()<br>
+        print(f'Accuracy: {100 * correct / total}%')
+    </code>
+
+    <h3>Conclusion</h3>
+    <p>In this tutorial, we walked through the basic steps of building a neural network using PyTorch. This simple network can be extended with more layers and advanced features to create more complex models. Experiment with different architectures and datasets to improve performance!</p>
+</article>
+
+<footer>
+    <p><a href="../index.html">Back to Home</a></p>
+</footer>
+
+</body>
+</html>
