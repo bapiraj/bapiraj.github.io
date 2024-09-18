@@ -53,10 +53,10 @@
         pre {
             position: relative;
             background-color: #f4f4f4;
-            padding: 5px; /* Further reduce padding */
+            padding: 5px;
             border-left: 3px solid #1a3b5d;
             margin-bottom: 10px;
-            white-space: pre-wrap; /* Preserve line breaks */
+            white-space: pre-wrap; /* Preserve line breaks and spaces */
             word-wrap: break-word;
         }
 
@@ -64,27 +64,26 @@
             display: block;
             padding: 0;
             margin: 0;
-            font-size: 0.9rem; /* Smaller font size */
-            line-height: 1.3;  /* Reduce line height */
+            font-size: 0.9rem;
+            line-height: 1.3;
             background-color: #f4f4f4;
-            white-space: normal; /* Remove extra spaces from indentation */
+            white-space: pre-wrap; /* Ensure proper spacing */
         }
 
         /* Copy button styling */
         .copy-btn {
             position: absolute;
-            top: 3px;  /* Align the button properly */
+            top: 3px;
             right: 5px;
             background-color: #1a3b5d;
             color: white;
             border: none;
-            padding: 2px 5px; /* Reduced padding */
+            padding: 2px 5px;
             cursor: pointer;
             border-radius: 3px;
-            font-size: 0.8rem; /* Smaller font size */
+            font-size: 0.8rem;
         }
 
-        /* Button hover effect */
         .copy-btn:hover {
             background-color: #16324e;
         }
@@ -102,57 +101,6 @@
 
         footer a:hover {
             text-decoration: underline;
-        }
-
-        /* Media queries for responsive adjustments */
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 0;
-            }
-
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            article {
-                width: 85%;
-                padding: 15px;
-            }
-
-            article h2, article h3 {
-                font-size: 1.5rem;
-            }
-
-            article p {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header {
-                padding: 10px 0;
-            }
-
-            header h1 {
-                font-size: 1.5rem;
-            }
-
-            article {
-                width: 95%;
-                padding: 10px;
-            }
-
-            article h2, article h3 {
-                font-size: 1.3rem;
-            }
-
-            article p {
-                font-size: 0.9rem;
-            }
-
-            footer {
-                padding: 15px;
-            }
         }
     </style>
 </head>
@@ -177,35 +125,84 @@
     <p>Next, import the required libraries for creating the neural network:</p>
     <pre>
         <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
-        <code>import torch<br>import torch.nn as nn<br>import torch.optim as optim<br>import torch.nn.functional as F<br>from torchvision import datasets, transforms</code>
+        <code>
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+from torchvision import datasets, transforms
+        </code>
     </pre>
 
     <h3>Step 3: Defining the Neural Network</h3>
     <p>Now, define a simple neural network. In this case, we will build a feedforward neural network with one hidden layer.</p>
     <pre>
         <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
-        <code>class SimpleNN(nn.Module):<br>def __init__(self):<br>super(SimpleNN, self).__init__()<br>self.fc1 = nn.Linear(784, 128)<br>self.fc2 = nn.Linear(128, 10)<br><br>def forward(self, x):<br>x = x.view(-1, 784)  # Flatten the input<br>x = F.relu(self.fc1(x))<br>x = self.fc2(x)<br>return F.log_softmax(x, dim=1)</code>
+        <code>
+class SimpleNN(nn.Module):
+    def __init__(self):
+        super(SimpleNN, self).__init__()
+        self.fc1 = nn.Linear(784, 128)
+        self.fc2 = nn.Linear(128, 10)
+
+    def forward(self, x):
+        x = x.view(-1, 784)  # Flatten the input
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+        return F.log_softmax(x, dim=1)
+        </code>
     </pre>
 
     <h3>Step 4: Setting Up Training and Testing Data</h3>
     <p>Next, load the training and testing datasets using torchvision. For this example, we will use the popular MNIST dataset of handwritten digits.</p>
     <pre>
         <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
-        <code>transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])<br>trainset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)<br>testset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)<br>trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)<br>testloader = torch.utils.data.DataLoader(testset, batch_size=32, shuffle=False)</code>
+        <code>
+transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+trainset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
+testset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
+testloader = torch.utils.data.DataLoader(testset, batch_size=32, shuffle=False)
+        </code>
     </pre>
 
     <h3>Step 5: Training the Model</h3>
     <p>After defining the model and loading the data, the next step is to train the neural network:</p>
     <pre>
         <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
-        <code>model = SimpleNN()<br>optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)<br>criterion = nn.CrossEntropyLoss()<br><br># Training loop<br>for epoch in range(10):<br>for data, target in trainloader:<br>optimizer.zero_grad()<br>output = model(data)<br>loss = criterion(output, target)<br>loss.backward()<br>optimizer.step()<br>print(f'Epoch {epoch + 1}: Loss = {loss.item()}')</code>
+        <code>
+model = SimpleNN()
+optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+criterion = nn.CrossEntropyLoss()
+
+# Training loop
+for epoch in range(10):
+    for data, target in trainloader:
+        optimizer.zero_grad()
+        output = model(data)
+        loss = criterion(output, target)
+        loss.backward()
+        optimizer.step()
+    print(f'Epoch {epoch + 1}: Loss = {loss.item()}')
+        </code>
     </pre>
 
     <h3>Step 6: Evaluating the Model</h3>
     <p>Once the model is trained, you can evaluate its performance on the test set:</p>
     <pre>
         <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
-        <code>correct = 0<br>total = 0<br>with torch.no_grad():<br>for data, target in testloader:<br>output = model(data)<br>_, predicted = torch.max(output.data, 1)<br>total += target.size(0)<br>correct += (predicted == target).sum().item()<br>print(f'Accuracy: {100 * correct / total}%')</code>
+        <code>
+correct = 0
+total = 0
+with torch.no_grad():
+    for data, target in testloader:
+        output = model(data)
+        _, predicted = torch.max(output.data, 1)
+        total += target.size(0)
+        correct += (predicted == target).sum().item()
+
+print(f'Accuracy: {100 * correct / total}%')
+        </code>
     </pre>
 
     <h3>Conclusion</h3>
