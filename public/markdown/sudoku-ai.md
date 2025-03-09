@@ -163,4 +163,4 @@ solve(grid)
 ## Try something out!
 
 1. How many iterations does it take each time `solve(grid)` is called? Can we reduce the number of iterations? Try to do it without using ChatGPT
-2. Try to build a web page supported by HTML, CSS and JS that solves a sudoku puzzle using backtracking. Try to use ChatGPT for this. Check this [Sudoku AI Playground](/playground/sudoku-ai) for reference
+2. Try to build a web page supported by HTML, CSS and JS that solves a sudoku puzzle using backtracking. Try to use ChatGPT for this. Check this [Sudoku AI Playground](/#/playground/sudoku-ai) for reference
