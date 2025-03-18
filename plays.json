@@ -3,5 +3,10 @@
         "id": "sudoku-ai",
         "title": "Sudoku AI Solver",
         "subtitle": "Suduko AI Puzzle"
+    },
+    {
+        "id": "snake-game",
+        "title": "Snake Game",
+        "subtitle": "Snake Game"
     }
 ]
