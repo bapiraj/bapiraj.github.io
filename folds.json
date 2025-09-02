@@ -1,8 +1,33 @@
-[
-    {
+[  
+  {
+    "id": "ai-lab-99-01",
+    "title": "Housing Price Prediction using Simple Linear Regression",
+    "subtitle": "AI Lab 99"
+  },
+  {
+    "id": "ai-lab-99-02",
+    "title": "Energy Consumption Prediction using Multiple Linear Regression",
+    "subtitle": "AI Lab 99"
+  },
+  {
+    "id": "ai-lab-99-03",
+    "title": "Auto Insurance Premium Prediction using Multiple Linear Regression with Binary Data Preprocessing",
+    "subtitle": "AI Lab 99"
+  },
+  {
+    "id": "ai-lab-99-04",
+    "title": "Movie Streaming Revenue Prediction using Multiple Linear Regression with One-Hot Encoding",
+    "subtitle": "AI Lab 99"
+  },
+  {
+    "id": "ai-lab-99-05",
+    "title": "Digital Marketing Ad Revenue Prediction using Polynomial Regression",
+    "subtitle": "AI Lab 99"
+  },
+  {
       "id": "sudoku-ai",
       "title": "Building Sudoku AI in Python",
       "subtitle": "Games and AI Simulations"
-    }
-  ]
+  }
+]
   

@@ -1,5 +1,17 @@
 [
     {
+        "id": "ai-lab-99",
+        "title": "AI Lab 99",
+        "Description": "Build AI Applications",
+        "items": [
+            "ai-lab-99-01",
+            "ai-lab-99-02",
+            "ai-lab-99-03",
+            "ai-lab-99-04",
+            "ai-lab-99-05"
+        ]
+    },
+    {
         "id": "games-and-ai-simulation",
         "title": "Games and AI Simulations",
         "Description": "Build games and simulate them using AI",
